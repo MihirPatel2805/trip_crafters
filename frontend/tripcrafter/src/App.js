@@ -18,7 +18,6 @@ function App() {
         </Route>
         <Route path="/hotels" element={<HomeHotelsPage />} >
             <Route path="hotel-listing" element={<HotelListingPage />} />
-          
         </Route>
     </Routes>
 </BrowserRouter>

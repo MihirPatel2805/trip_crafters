@@ -1,8 +1,11 @@
 import React from 'react'
+import { Outlet } from 'react-router-dom';
 
 function HomeHotelsPage() {
   return (
-    <div>HomeHotelsPage</div>
+    <div>
+      <Outlet />
+    </div>
   )
 }
 
