@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import HomePage  from './pages/HomePage';
@@ -6,6 +5,7 @@ import HomeRailwaysPage from './pages/HomeRailwaysPage';
 import HomeHotelsPage from './pages/HomeHotelsPage';
 import TrainListingPage from './pages/TrainListingPage';
 import HotelListingPage from './pages/HotelListingPage';
+import HotelDetailPage from './pages/HotelDetailPage';
 
 function App() {
   return (
@@ -18,6 +18,7 @@ function App() {
         </Route>
         <Route path="/hotels" element={<HomeHotelsPage />} >
             <Route path="hotel-listing" element={<HotelListingPage />} />
+            <Route path="hotel-details" element={<HotelDetailPage />} />
         </Route>
     </Routes>
 </BrowserRouter>
