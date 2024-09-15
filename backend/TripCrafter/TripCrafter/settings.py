@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-arxl=^3p04b6nnqn3#5&i^&si#0s!p4ftpf2xvgf$e@_qusg@^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -76,8 +76,14 @@ WSGI_APPLICATION = 'TripCrafter.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',
+        'NAME': 'TripCrafter',
+        'CLIENT': {
+            'host':'mongodb+srv://mihirpatel3780:1234Mp@cluster0.mag5z.mongodb.net/TripCrafter',
+            'username': 'mihirpatel3780',
+            'password': '1234Mp',
+            "authMechanism": "SCRAM-SHA-1",
+        }
     }
 }
 
@@ -122,3 +128,13 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CORS_ORIGIN_WHITELIST = ( 'localhost:3000')
+# AUTH_USER_MODEL='accounts.User'
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+
+]
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+APPEND_SLASH = False
