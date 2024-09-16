@@ -38,7 +38,7 @@ function HotelListingPage() {
   };
 
   const handleHotelClick = (hotelId) => {
-    navigate(`/hotel/${hotelId}`);  // Navigate to the hotel detail page
+    navigate(`/hotels/hotel-listing/${hotelId}`);  // Navigate to the hotel detail page
   };
   
   if (loading) {
