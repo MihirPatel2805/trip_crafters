@@ -13,7 +13,15 @@ function HotelListingPage() {
   useEffect(() => {
     const fetchHotels = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/hotels/");
+        const response = await axios.get("http://localhost:8000/api/hotels/featchHotels/",{
+          city:''
+        },{
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        console.log(response.data)
         setHotels(response.data);
       } catch (error) {
         console.error("Error fetching hotels:", error);
@@ -147,7 +155,7 @@ function HotelListingPage() {
           <div className="col-span-3 grid grid-cols-2 md:grid-cols-2 gap-4">
             {hotels.map((hotel) => (
               <div key={hotel.id} className="bg-white rounded-lg p-4 shadow-md" onClick={() => handleHotelClick(hotel.id)}>
-                <img src={hotel.image} alt={hotel.name} className="w-full h-32 object-cover rounded-md mb-2" />
+                <img src={`http://localhost:8000${hotel.images[0].image}`} alt={hotel.name} className="w-full h-32 object-cover rounded-md mb-2" />
                 <h2 className="font-bold text-xl">{hotel.name}</h2>
                 <p className="text-gray-600">Price: ₹{hotel.price}</p>
                 <p className="text-gray-600">Rating: {hotel.rating}</p>
