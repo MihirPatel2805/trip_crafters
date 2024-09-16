@@ -35,7 +35,6 @@ const cities = [
   { JunctionName: "Asansol Junction" },
   { JunctionName: "Nagpur Junction" },
   { JunctionName: "Ahmedabad Junction" },
-  { JunctionName: "Visakhapatnam Junction" },
   { JunctionName: "Coimbatore Junction" },
   { JunctionName: "Thiruvananthapuram Central" },
 ];
@@ -55,7 +54,7 @@ const Traintopsection = ({ updateSearchParams }) => {
   const [searchData, setSearchData] = useState({
     source: "Delhi Junction",
     destination: "Salem Junction",
-    day: "Tue",
+    day: new Date().toLocaleDateString('en-US', { weekday: 'short' }), // Default to current day
     date: new Date().toLocaleDateString(),
   });
   const [showDate, setShowDate] = useState(false);
@@ -72,6 +71,19 @@ const Traintopsection = ({ updateSearchParams }) => {
     setToTrainData(toData);
   }, [dropDownData]);
 
+  useEffect(() => {
+    if (selectedDate) {
+      const formattedDate = new Date(selectedDate).toLocaleDateString();
+      const dayOfWeek = new Date(selectedDate).toLocaleDateString('en-US', { weekday: 'short' });
+      setSearchData((prev) => ({
+        ...prev,
+        date: formattedDate,
+        day: dayOfWeek,
+      }));
+      document.getElementById("ts-datepicker").innerText = formattedDate;
+    }
+  }, [selectedDate]);
+
   const handleSearchData = (key, value) => {
     setSearchData((prev) => ({
       ...prev,
@@ -82,16 +94,12 @@ const Traintopsection = ({ updateSearchParams }) => {
   const handleDepartureDateClick = () => {
     setShowDate(!showDate);
   };
+
   const handleDepartureDate = (date) => {
     setSelectedDate(date);
     setShowDate(false);
-
-    document.getElementById("ts-datepicker").innerText = new Date(date)
-      .toString()
-      .split(" ")
-      .slice(0, 4)
-      .join(" ");
   };
+
   const handleTrainSearchButtonClick = () => {
     updateSearchParams(searchData);
   };
@@ -116,7 +124,7 @@ const Traintopsection = ({ updateSearchParams }) => {
           <div className="traveldate-div" onClick={handleDepartureDateClick}>
             <p>TRAVEL DATE</p>
             <p id="ts-datepicker">
-              {new Date(date).toString().split(" ").slice(0, 4).join(" ")}
+              {searchData.date}
             </p>
           </div>
 

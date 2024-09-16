@@ -65,7 +65,7 @@ const TrainListingPage = () => {
         }
 
         if (day) {
-          filteredTrains = filteredTrains.filter(train => train.daysOfOperation.includes(day));
+          filteredTrains = filteredTrains.filter(train => JSON.parse(train.daysOfOperation).includes(day.toLowerCase()));
         }
 
         if (departureTime) {
