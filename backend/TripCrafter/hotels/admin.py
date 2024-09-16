@@ -11,10 +11,11 @@ class HotelImageInline(admin.TabularInline):
     extra = 4  # Number of empty forms to show by default
 
 # Customize the Hotel admin view
+@admin.register(Hotel)
 class HotelAdmin(admin.ModelAdmin):
-    inlines = [RoomInline, HotelImageInline]  # Add Room and Image inline models
+    inlines = [HotelImageInline, RoomInline]  # Add Room and Image inline models
 
 # Register the Hotel model
-admin.site.register(Hotel, HotelAdmin)
-
+# admin.site.register(HotelImage)
+# admin.site.register(Room)
 

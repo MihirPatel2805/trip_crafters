@@ -3,10 +3,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Hotel,Room
-from .serializers import HotelSerializer
+from .serializers import HotelSerializer, HotelImageSerializer
 from django.shortcuts import get_object_or_404
-
-
 
 class HotelListAPIView(APIView):
     def get(self, request):
@@ -15,10 +13,12 @@ class HotelListAPIView(APIView):
             if city:
                 hotels = Hotel.objects.filter(location__icontains=city).all()
                 serializer = HotelSerializer(hotels, many=True)
+                images = HotelImageSerializer(many=True, read_only=True, pk=serializer.data.id)
                 return Response(serializer.data, status=status.HTTP_200_OK)
             else:
                 hotels = Hotel.objects.all()
                 serializer = HotelSerializer(hotels, many=True)
+                print(serializer.data)
                 return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
