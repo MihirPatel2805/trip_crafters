@@ -4,18 +4,15 @@ import { useParams } from "react-router-dom";
 
 function HotelDetailPage() {
     const [hotel, setHotel] = useState(null); // State to store hotel details
-    const [suggestedHotels, setSuggestedHotels] = useState([]); // State to store suggested hotels
     const [loading, setLoading] = useState(true); // State to handle loading
     const { id } = useParams();
 
-    // Fetch hotel details and suggested hotels when the component mounts
+    // Fetch hotel details when the component mounts
     useEffect(() => {
         const fetchHotelData = async () => {
             try {
-                const hotelResponse = await axios.get(`http://localhost:8000/api/hotels/hoteldetails/${id}`); // Replace with actual API URL
-                // const suggestedHotelsResponse = await axios.get('http://api.example.com/hotels/suggestions'); // Replace with actual API URL
+                const hotelResponse = await axios.get(`http://localhost:8000/api/hotels/hoteldetails/${id}`);
                 setHotel(hotelResponse.data);
-                // setSuggestedHotels(suggestedHotelsResponse.data);
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching hotel data:", error);
@@ -107,43 +104,29 @@ function HotelDetailPage() {
                     </div>
                 </div>
 
-                {/* Suggested Hotels Nearby */}
+                {/* Room Selection Section */}
                 <div className="mt-8">
-                    <h2 className="text-2xl font-bold mb-4">Suggested Hotels Nearby</h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-                        {suggestedHotels.map((suggestedHotel, index) => (
-                            <div key={index} className="bg-white rounded-lg overflow-hidden shadow">
-                                <img
-                                    src={`http://localhost:8000${suggestedHotel.images[0].image}`} // Assuming you want the first image for the suggested hotels
-                                    alt={suggestedHotel.name}
-                                    className="w-full h-40 object-cover"
-                                />
-                                <div className="p-4">
-                                    <h3 className="text-lg font-semibold mb-2">{suggestedHotel.name}</h3>
-                                    <p className="text-gray-600 mb-2">{suggestedHotel.location}</p>
-                                    <div className="flex items-center mb-2">
-                                        <div className="flex items-center">
-                                            {[...Array(Math.round(suggestedHotel.rating))].map((_, index) => (
-                                                <svg
-                                                    key={index}
-                                                    className="h-5 w-5 text-yellow-500"
-                                                    fill="currentColor"
-                                                    viewBox="0 0 20 20"
-                                                >
-                                                    <path d="M10 15.27L16.18 19l-1.64-7.03L20 7.24l-7.19-.61L10 0 7.19 6.63 0 7.24l5.46 4.73L3.82 19z" />
-                                                </svg>
-                                            ))}
-                                            <span className="ml-2 text-gray-500">({suggestedHotel.rating})</span>
-                                        </div>
+                    <h2 className="text-2xl font-bold mb-4">Available Rooms</h2>
+                    {hotel.rooms && hotel.rooms.length > 0 ? (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                            {hotel.rooms.map((room, index) => (
+                                <div key={index} className="bg-white rounded-lg overflow-hidden shadow">
+                                    <div className="p-4">
+                                        <h3 className="text-lg font-semibold mb-2">{room.room_type}</h3>
+                                        <p className="text-gray-600 mb-2">{room.description}</p>
+                                        <p className="text-gray-600 mb-2">Max Guests: {room.max_guests}</p>
+                                        <p className="text-lg font-bold text-blue-600 mb-2">₹{room.price_per_night} per night</p>
+                                        <p className="text-gray-600 mb-4">Rooms Available: {room.number_of_rooms}</p>
+                                        <button className="mt-2 w-full bg-blue-500 text-white py-2 rounded-lg shadow hover:bg-blue-600 transition duration-300">
+                                            Select Room
+                                        </button>
                                     </div>
-                                    <p className="text-lg font-bold text-blue-600">{suggestedHotel.price}</p>
-                                    <button className="mt-2 w-full bg-blue-500 text-white py-2 rounded-lg shadow hover:bg-blue-600 transition duration-300">
-                                        View Details
-                                    </button>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <p className="text-gray-600">No rooms available at this time.</p>
+                    )}
                 </div>
             </div>
         </div>
