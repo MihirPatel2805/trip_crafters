@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Train, Station, Route
+from .models import Station, Train, Coach, Route
 
 class StationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -7,16 +7,24 @@ class StationSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class TrainSerializer(serializers.ModelSerializer):
-    start_station = StationSerializer()
-    end_station = StationSerializer()
+    # Use nested serializers to include detailed information for related fields
+    source = serializers.StringRelatedField()  # Display related Station as string
+    destination = serializers.StringRelatedField()  # Display related Station as string
 
     class Meta:
         model = Train
         fields = '__all__'
 
+class CoachSerializer(serializers.ModelSerializer):
+    train = serializers.StringRelatedField()  # Display related Train as string
+
+    class Meta:
+        model = Coach
+        fields = '__all__'
+
 class RouteSerializer(serializers.ModelSerializer):
-    train = TrainSerializer()
-    station = StationSerializer()
+    train = serializers.StringRelatedField()  # Display related Train as string
+    station = serializers.StringRelatedField()  # Display related Station as string
 
     class Meta:
         model = Route
