@@ -18,7 +18,7 @@ function App() {
         </Route>
         <Route path="/hotels" element={<HomeHotelsPage />} >
             <Route path="hotel-listing" element={<HotelListingPage />} />
-            <Route path="hotel-details" element={<HotelDetailPage />} />
+            <Route path="hotel-listing/:id" element={<HotelDetailPage />} />
         </Route>
     </Routes>
 </BrowserRouter>

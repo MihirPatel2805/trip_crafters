@@ -161,20 +161,21 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import {useParams} from "react-router-dom";
 
 function HotelDetailPage() {
     const [hotel, setHotel] = useState(null); // State to store hotel details
     const [suggestedHotels, setSuggestedHotels] = useState([]); // State to store suggested hotels
     const [loading, setLoading] = useState(true); // State to handle loading
-
+    const { id } = useParams();
     // Fetch hotel details and suggested hotels when the component mounts
     useEffect(() => {
         const fetchHotelData = async () => {
             try {
-                const hotelResponse = await axios.get('https://api.example.com/hotel/1'); // Replace with actual API URL
-                const suggestedHotelsResponse = await axios.get('https://api.example.com/hotel/suggestions'); // Replace with actual API URL
+                const hotelResponse = await axios.get(`http://localhost:8000/api/hotels/hoteldetails/${id}`); // Replace with actual API URL
+                // const suggestedHotelsResponse = await axios.get('http://api.example.com/hotels/suggestions'); // Replace with actual API URL
                 setHotel(hotelResponse.data);
-                setSuggestedHotels(suggestedHotelsResponse.data);
+                // setSuggestedHotels(suggestedHotelsResponse.data);
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching hotel data:", error);
@@ -202,7 +203,7 @@ function HotelDetailPage() {
                     {/* Left Side: Hotel Details */}
                     <div className="bg-white rounded-lg overflow-hidden">
                         <img
-                            src={hotel.image}
+                            src={`http://localhost:8000${hotel.images[0].image}`}
                             alt={hotel.name}
                             className="w-full h-64 object-cover mb-4"
                         />
