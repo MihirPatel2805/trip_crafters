@@ -19,3 +19,12 @@ class HotelListAPIView(APIView):
                 return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+from django.shortcuts import get_object_or_404  # Import get_object_or_404
+from rest_framework import generics  # Import generics if you want to use class-based views
+
+class HotelDetailAPIView(APIView):
+    def get(self, request, hotel_id):
+        hotel = get_object_or_404(Hotel, id=hotel_id)  # Fetch the hotel based on hotel_id
+        serializer = HotelSerializer(hotel)  # Serialize the hotel data
+        return Response(serializer.data, status=status.HTTP_200_OK)
