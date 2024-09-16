@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./trainsearchpage.css";
 import { useSearchParams } from "react-router-dom";
+import axios from "axios";
 
 import trainData from "../components/trainData";
 import TrainCard from "../components/TrainCard";
@@ -20,7 +21,9 @@ const TrainListingPage = () => {
   // Static train data
 
 
-  const [data, setData] = useState(trainData);
+  const [data, setData] = useState({ trains: [] });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const handleCheckboxChange = (key, value) => {
     if (value === "") {
@@ -43,39 +46,54 @@ const TrainListingPage = () => {
   };
 
   useEffect(() => {
-    let filteredTrains = trainData.trains;
+    const fetchTrainData = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/trains/trains/");
+        let filteredTrains = response.data;
+        console.log(filteredTrains)
+        if (source) {
+          for (var trains of filteredTrains)
+          {
+            console.log(trains)
+          }
+          filteredTrains = filteredTrains.filter(train => train.source === source);
 
-    if (source) {
-      filteredTrains = filteredTrains.filter(train => train.source === source);
-    }
+        }
 
-    if (destination) {
-      filteredTrains = filteredTrains.filter(train => train.destination === destination);
-    }
+        if (destination) {
+          filteredTrains = filteredTrains.filter(train => train.destination === destination);
+        }
 
-    if (day) {
-      filteredTrains = filteredTrains.filter(train => train.daysOfOperation.includes(day));
-    }
+        if (day) {
+          filteredTrains = filteredTrains.filter(train => train.daysOfOperation.includes(day));
+        }
 
-    if (departureTime) {
-      filteredTrains = filteredTrains.filter(train => train.departureTime >= departureTime);
-    }
+        if (departureTime) {
+          filteredTrains = filteredTrains.filter(train => train.departureTime >= departureTime);
+        }
 
-    if (arrivalTime) {
-      filteredTrains = filteredTrains.filter(train => train.arrivalTime <= arrivalTime);
-    }
+        if (arrivalTime) {
+          filteredTrains = filteredTrains.filter(train => train.arrivalTime <= arrivalTime);
+        }
 
-    if (coachType) {
-      filteredTrains = filteredTrains.filter(train =>
-          train.coaches.some(coach => coach.coachType === coachType)
-      );
-    }
+        if (coachType) {
+          filteredTrains = filteredTrains.filter(train =>
+              train.coaches.some(coach => coach.coachType === coachType)
+          );
+        }
 
-    if (trainType) {
-      filteredTrains = filteredTrains.filter(train => train.trainType === trainType);
-    }
+        if (trainType) {
+          filteredTrains = filteredTrains.filter(train => train.trainType === trainType);
+        }
+        setData({ trains: filteredTrains });
+        setLoading(false);
+      } catch (error) {
+        setError(error);
+        setLoading(false);
+      }
+    };
 
-    setData({ trains: filteredTrains });
+    fetchTrainData();
   }, [params]); // Depend on params only
 
   return (
