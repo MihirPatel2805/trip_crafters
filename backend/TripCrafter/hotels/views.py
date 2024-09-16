@@ -2,9 +2,11 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Hotel
+from .models import Hotel,Room
 from .serializers import HotelSerializer
 from django.shortcuts import get_object_or_404
+
+
 
 class HotelListAPIView(APIView):
     def get(self, request):

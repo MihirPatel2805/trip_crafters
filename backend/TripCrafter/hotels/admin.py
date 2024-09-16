@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import Hotel
 # Register your models here.
 from django.contrib import admin
-from .models import Hotel, HotelImage
+from .models import Hotel, HotelImage ,Room
 
 class HotelImageInline(admin.TabularInline):
     model = HotelImage
@@ -14,3 +14,4 @@ class HotelAdmin(admin.ModelAdmin):
 
 admin.site.register(HotelImage)
 
+admin.site.register(Room)
