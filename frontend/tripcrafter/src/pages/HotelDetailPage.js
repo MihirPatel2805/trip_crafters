@@ -306,21 +306,21 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import {useParams} from "react-router-dom";
 
 function HotelDetailPage() {
-    const { hotelId } = useParams(); // Get the hotelId from the URL parameters
-    const [hotel, setHotel] = useState(null);
-    const [suggestedHotels, setSuggestedHotels] = useState([]);
-    const [loading, setLoading] = useState(true);
-
+    const [hotel, setHotel] = useState(null); // State to store hotel details
+    const [suggestedHotels, setSuggestedHotels] = useState([]); // State to store suggested hotels
+    const [loading, setLoading] = useState(true); // State to handle loading
+    const { id } = useParams();
+    // Fetch hotel details and suggested hotels when the component mounts
     useEffect(() => {
         const fetchHotelData = async () => {
             try {
-                const hotelResponse = await axios.get(`http://localhost:8000/api/hotels/${hotelId}/`); // Fetch hotel details
-                const suggestedHotelsResponse = await axios.get('http://localhost:8000/api/hotels/suggestions/'); // Fetch suggested hotels
+                const hotelResponse = await axios.get(`http://localhost:8000/api/hotels/hoteldetails/${id}`); // Replace with actual API URL
+                // const suggestedHotelsResponse = await axios.get('http://api.example.com/hotels/suggestions'); // Replace with actual API URL
                 setHotel(hotelResponse.data);
-                setSuggestedHotels(suggestedHotelsResponse.data);
+                // setSuggestedHotels(suggestedHotelsResponse.data);
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching hotel data:", error);
@@ -348,7 +348,7 @@ function HotelDetailPage() {
                     {/* Left Side: Hotel Details */}
                     <div className="bg-white rounded-lg overflow-hidden">
                         <img
-                            src={hotel.image}
+                            src={`http://localhost:8000${hotel.images[0].image}`}
                             alt={hotel.name}
                             className="w-full h-64 object-cover mb-4"
                         />
