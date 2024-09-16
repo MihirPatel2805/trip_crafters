@@ -34,3 +34,10 @@ class HotelDetailAPIView(APIView):
         print(hotel)
         serializer = HotelSerializer(hotel)
         return Response(serializer.data , status=status.HTTP_200_OK)
+
+# class RoomDetailAPIView(APIView):
+#     def get(self, request):
+#         room = Room.objects.all()
+#         print(room)
+#         serializer = RoomSerializer(room)
+#         return Response(serializer.data, status=status.HTTP_200_OK)
