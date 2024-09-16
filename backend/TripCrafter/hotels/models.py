@@ -8,5 +8,14 @@ class Hotel(models.Model):
     rating = models.FloatField()
     price_per_night = models.DecimalField(max_digits=10, decimal_places=2)
     amenities = models.JSONField()  # List of amenities
-    image_urls = models.JSONField()  # List of image URLs
     available_rooms = models.IntegerField()
+
+    def __str__(self):
+        return self.name
+
+class HotelImage(models.Model):
+    hotel = models.ForeignKey(Hotel, related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='hotels/')  # Upload images to 'media/hotels/'
+
+    def __str__(self):
+        return f"Image for {self.hotel.name}"
