@@ -19,6 +19,7 @@ function HotelListingPage() {
             'Content-Type': 'application/json',
           },
         });
+        console.log(response.data)
         setHotels(response.data);
       } catch (error) {
         console.error("Error fetching hotels:", error);
