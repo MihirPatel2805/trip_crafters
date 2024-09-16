@@ -20,12 +20,17 @@ class HotelImage(models.Model):
     def __str__(self):
         return f"Image for {self.hotel.name}"
 
+    @property
+    def name(self):
+        return self.hotel.name
 
 class Room(models.Model):
-    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, related_name='rooms')
+    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE ,related_name='rooms',default=None)
     room_type = models.CharField(max_length=100)
     price_per_night = models.DecimalField(max_digits=10, decimal_places=2)
     max_guests = models.IntegerField()
     number_of_rooms = models.IntegerField()
     description = models.TextField()
     image_urls = models.ImageField(upload_to='rooms/')
+
+
