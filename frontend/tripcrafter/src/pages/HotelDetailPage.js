@@ -46,11 +46,12 @@ function HotelDetailPage() {
                         <div className="flex flex-wrap">
                             {hotel.images.map((image, index) => (
                                 <img
-                                    key={index}
-                                    src={`http://localhost:8000${image.image}`}
-                                    alt={`${hotel.name} image ${index + 1}`}
-                                    className="w-full h-64 object-cover mb-4"
-                                />
+                                key={index}
+                                src={`http://localhost:8000${image.image}`}
+                                alt={`${hotel.name} image ${index + 1}`}
+                                className="w-full h-64 object-cover mb-4" // Set equal height
+                                style={{ width: '100%', height: '300px' }} // Adjust this value as needed for equal width and height
+                            />
                             ))}
                         </div>
                         <div className="p-6">
