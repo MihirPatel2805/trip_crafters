@@ -1,16 +1,13 @@
-from rest_framework import generics
-from .models import Train, Station, Route
-from .serializers import TrainSerializer, StationSerializer, RouteSerializer
-
-class TrainListView(generics.ListAPIView):
-    queryset = Train.objects.all()
-    serializer_class = TrainSerializer
-
-class StationListView(generics.ListAPIView):
-    queryset = Station.objects.all()
-    serializer_class = StationSerializer
-
-class TrainDetailView(generics.RetrieveAPIView):
-    queryset = Train.objects.all()
-    serializer_class = TrainSerializer
-    lookup_field = 'number'
+from django.shortcuts import render
+from rest_framework import viewsets
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from .models import Train
+from .serializers import TrainSerializer
+from rest_framework import status
+# Create your views here.
+class TrainViewSet(APIView):
+    def get(self, request):
+        trains = Train.objects.all()
+        serializer = TrainSerializer(trains, many=True)
+        return Response(serializer.data,status=status.HTTP_200_OK)

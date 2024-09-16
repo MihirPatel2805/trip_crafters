@@ -1,28 +1,17 @@
 from django.db import models
 
-class Station(models.Model):
-    name = models.CharField(max_length=100)
-    code = models.CharField(max_length=10, unique=True)
-    city = models.CharField(max_length=100)
-
-    def __str__(self):
-        return f"{self.name} ({self.code})"
-
+# Create your models here.
 class Train(models.Model):
-    name = models.CharField(max_length=100)
-    number = models.CharField(max_length=10, unique=True)
-    start_station = models.ForeignKey(Station, related_name='start_trains', on_delete=models.CASCADE)
-    end_station = models.ForeignKey(Station, related_name='end_trains', on_delete=models.CASCADE)
-    days_of_operation = models.CharField(max_length=50)  # E.g., 'Mon, Wed, Fri'
+    trainName = models.CharField(max_length=100,default="Prayagraj Express")  # Name of the train (e.g., 'Prayagraj Express')
+    trainNumber = models.CharField(max_length=255,unique=True) # Train number (e.g., '12418')
+    source = models.CharField(max_length=100,default="Ahmedabad Junction")  # Source station as a string (e.g., 'Ahmedabad Junction')
+    destination = models.CharField(max_length=100,default="Allahabad Junction")  # Destination station as a string (e.g., 'Allahabad Junction')
+    departureTime = models.TimeField(default='00:00')  # Departure time (e.g., '17:20')
+    arrivalTime = models.TimeField(default='00:00')  # Set a default time value for existing rows
+    travelDuration = models.CharField(max_length=10,default="18h 55m")  # Travel duration as a string (e.g., '18h 55m')
+    fare = models.DecimalField(max_digits=10, decimal_places=2,default=1000)  # Fare in currency
+    availableSeats = models.IntegerField(default=120)  # Available seats
+    trainType = models.CharField(max_length=50,default="Express")  # Type of the train (e.g., 'Express')
+    daysOfOperation = models.JSONField(default=list)  # Days of operation (e.g., 'Mon, Thu, Sat')
+    coaches=models.JSONField(default=list)
 
-    def __str__(self):
-        return f"{self.name} ({self.number})"
-
-class Route(models.Model):
-    train = models.ForeignKey(Train, related_name='routes', on_delete=models.CASCADE)
-    station = models.ForeignKey(Station, on_delete=models.CASCADE)
-    arrival_time = models.TimeField()
-    departure_time = models.TimeField()
-
-    def __str__(self):
-        return f"{self.train.name} - {self.station.name}"
