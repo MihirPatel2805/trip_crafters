@@ -6,6 +6,7 @@ import HomeHotelsPage from './pages/HomeHotelsPage';
 import TrainListingPage from './pages/TrainListingPage';
 import HotelListingPage from './pages/HotelListingPage';
 import HotelDetailPage from './pages/HotelDetailPage';
+import LoginPage from './pages/LoginPage';
 
 function App() {
   return (
@@ -13,6 +14,8 @@ function App() {
 
     <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+
         <Route path="/railways" element={<HomeRailwaysPage />} >
           <Route path="train-listing" element={<TrainListingPage />} />
         </Route>
