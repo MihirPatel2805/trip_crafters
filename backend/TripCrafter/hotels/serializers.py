@@ -6,12 +6,6 @@ class HotelImageSerializer(serializers.ModelSerializer):
         model = HotelImage
         fields = ['id', 'image']  # You can add any additional fields you need
 
-class HotelSerializer(serializers.ModelSerializer):
-    # Use the HotelImageSerializer to handle the nested images
-    class Meta:
-        model = Hotel
-        fields = ['id', 'name', 'location', 'description', 'rating', 'price_per_night', 'amenities', 'available_rooms', 'images']
-
 
 class RoomSerializer(serializers.ModelSerializer):
     class Meta:
@@ -24,5 +18,16 @@ class RoomSerializer(serializers.ModelSerializer):
             'max_guests',       # Maximum number of guests allowed
             'number_of_rooms',  # Number of rooms of this type
             'description',      # Description of the room
-            'image_urls',       # List of image URLs for the room
+                 # List of image URLs for the room
         ]
+
+class HotelSerializer(serializers.ModelSerializer):
+    images = HotelImageSerializer(many=True, read_only=True)
+    rooms = RoomSerializer(many=True, read_only=True)
+
+    # Use the HotelImageSerializer to handle the nested images
+    class Meta:
+        model = Hotel
+        fields = ['id', 'name', 'location', 'description', 'rating', 'price_per_night', 'amenities',
+                  'available_rooms', 'images', 'rooms']
+

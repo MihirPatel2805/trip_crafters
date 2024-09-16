@@ -13,7 +13,7 @@ function HotelListingPage() {
   useEffect(() => {
     const fetchHotels = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/hotels/featchHotels/",{
+        const response = await axios.get("http://localhost:8000/api/hotels/featchHotels/",{city:""},{
           withCredentials: true,
           headers: {
             'Content-Type': 'application/json',
