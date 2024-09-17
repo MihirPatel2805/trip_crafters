@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Hotel, HotelImage,Room
+from .models import Hotel, HotelImage, Room, Booking
+
 
 class HotelImageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,13 +22,18 @@ class RoomSerializer(serializers.ModelSerializer):
                  # List of image URLs for the room
         ]
 
+class BookingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Booking
+        fields='__all__'
+
 class HotelSerializer(serializers.ModelSerializer):
     images = HotelImageSerializer(many=True, read_only=True)
     rooms = RoomSerializer(many=True, read_only=True)
-
+    bookings = BookingSerializer(many=True, read_only=True)
     # Use the HotelImageSerializer to handle the nested images
     class Meta:
         model = Hotel
         fields = ['id', 'name', 'location', 'description', 'rating', 'price_per_night', 'amenities',
-                  'available_rooms', 'images', 'rooms']
+                  'available_rooms', 'images', 'rooms','bookings']
 
