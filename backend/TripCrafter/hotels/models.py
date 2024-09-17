@@ -27,3 +27,9 @@ class Room(models.Model):
     max_guests = models.IntegerField()
     number_of_rooms = models.IntegerField()
     description = models.TextField()
+
+class Booking(models.Model):
+    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE ,related_name='bookings')
+    date = models.DateField()
+    room = models.ForeignKey(Room, on_delete=models.CASCADE ,related_name='bookings')
+    userDetails = models.JSONField()
