@@ -27,5 +27,3 @@ class Room(models.Model):
     max_guests = models.IntegerField()
     number_of_rooms = models.IntegerField()
     description = models.TextField()
-
-
