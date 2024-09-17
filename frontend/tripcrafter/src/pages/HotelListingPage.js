@@ -203,9 +203,11 @@
 // export default HotelListingPage;
 
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";  
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "react-datepicker/dist/react-datepicker.css";
+import "react-datepicker/dist/react-datepicker.css";   
+  
+
 
 function HotelListingPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -216,18 +218,18 @@ function HotelListingPage() {
   const [rating, setRating] = useState(""); // State for rating filter
   const [price, setPrice] = useState(""); // State for price filter
   const [city, setCity] = useState(""); // State for city filter
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchHotels = async () => {
       try {
         const response = await axios.get("http://localhost:8000/api/hotels/featchHotels", {
           params: {
-            city,
-            amenities,
+            city: city || "", // Handle empty city filter
+            amenities: amenities.length > 0 ? amenities : "", // Handle empty amenities filter
             rating,
             price,
-            searchTerm
+            searchTerm,
           },
           withCredentials: true,
           headers: {
@@ -244,7 +246,7 @@ function HotelListingPage() {
     };
 
     fetchHotels();
-  }, [city, amenities, rating, price, searchTerm]); // Added dependencies to fetch on filter change
+  }, [city, amenities, rating, price, searchTerm]); // Dependencies for filter changes
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);

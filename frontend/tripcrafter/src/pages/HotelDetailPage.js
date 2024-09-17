@@ -105,17 +105,6 @@ function HotelDetailPage() {
                             ))}
                         </ul>
                     </div>
-
-                    {/* Right Side: Pricing and Offers */}
-                    <div className="bg-white rounded-lg p-6 border">
-                        <h2 className="text-xl font-bold mb-4">Pricing</h2>
-                        <p className="text-3xl font-semibold text-blue-600 mb-4">{hotel.price_per_night} per night</p>
-                        <h3 className="text-lg font-semibold mb-2">Special Offer</h3>
-                        <p className="text-green-600 font-semibold">{hotel.offer}</p>
-                        <button className="mt-4 w-full bg-blue-500 text-white py-3 rounded-lg shadow hover:bg-blue-600 transition duration-300">
-                            Book Now
-                        </button>
-                    </div>
                 </div>
 
                 {/* Room Selection Section */}
@@ -142,6 +131,16 @@ function HotelDetailPage() {
                         <p className="text-gray-600">No rooms available at this time.</p>
                     )}
                 </div>
+                
+                <div className="bg-white rounded-lg p-6 border">
+                        <h2 className="text-xl font-bold mb-4">Pricing</h2>
+                        <p className="text-3xl font-semibold text-blue-600 mb-4">{hotel.price_per_night} per night</p>
+                        <h3 className="text-lg font-semibold mb-2">Special Offer</h3>
+                        <p className="text-green-600 font-semibold">{hotel.offer}</p>
+                        <button className="mt-4 w-full bg-blue-500 text-white py-3 rounded-lg shadow hover:bg-blue-600 transition duration-300">
+                            Book Now
+                        </button>
+                    </div>
             </div>
         </div>
     );
