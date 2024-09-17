@@ -1,11 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { useParams } from "react-router-dom";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css'; // Import Swiper base styles
+import 'swiper/css/navigation'; // Import Swiper Navigation styles
+import 'swiper/css/pagination'; // Import Swiper Pagination styles
+
+import { Navigation, Pagination } from 'swiper/modules'; // Correct import path for Swiper modules in version 7+
 
 function HotelDetailPage() {
     const [hotel, setHotel] = useState(null); // State to store hotel details
     const [loading, setLoading] = useState(true); // State to handle loading
-    const { id } = useParams();
+    const { id } = useParams(); // Get the hotel ID from the URL
 
     // Fetch hotel details when the component mounts
     useEffect(() => {
@@ -38,18 +44,25 @@ function HotelDetailPage() {
         <div className='container mx-auto px-4 sm:px-6 lg:px-8 bg-gray-100'>
             <div className="py-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {/* Left Side: Hotel Details */}
                     <div className="bg-white rounded-lg overflow-hidden">
                         <div className="flex flex-wrap">
+                        <Swiper
+                            modules={[Pagination, Navigation]} // Corrected modules usage
+                            spaceBetween={30}
+                            navigation
+                            pagination={{ clickable: true }}
+                            className="hotel-images-carousel"
+                        >
                             {hotel.images.map((image, index) => (
-                                <img
-                                key={index}
-                                src={`http://localhost:8000${image.image}`}
-                                alt={`${hotel.name} image ${index + 1}`}
-                                className="w-full h-64 object-cover mb-4" // Set equal height
-                                style={{ width: '100%', height: '300px' }} // Adjust this value as needed for equal width and height
-                            />
+                                <SwiperSlide key={index}>
+                                    <img
+                                        src={`http://localhost:8000${image.image}`}
+                                        alt={`${hotel.name} ${index + 1}`}
+                                        className="w-full h-96 object-cover mb-4"
+                                    />
+                                </SwiperSlide>
                             ))}
+                        </Swiper>
                         </div>
                         <div className="p-6">
                             <h1 className="text-2xl md:text-3xl font-bold mb-2">{hotel.name}</h1>
@@ -70,7 +83,7 @@ function HotelDetailPage() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>  
 
                     {/* Amenities */}
                     <div className="border border-gray-300 rounded-lg p-4 bg-white">
