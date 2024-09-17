@@ -12,3 +12,8 @@ class StationListView(generics.ListAPIView):
 class CoachView(generics.ListAPIView):
     queryset = Coach.objects.all()
     serializer_class = CoachSerializer
+
+class TrainDetailView(generics.RetrieveAPIView):
+    queryset = Train.objects.all()
+    serializer_class = TrainSerializer
+    lookup_field = 'id'  # This will look for 'id' in the URL

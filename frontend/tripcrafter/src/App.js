@@ -6,6 +6,7 @@ import HomeHotelsPage from './pages/HomeHotelsPage';
 import TrainListingPage from './pages/TrainListingPage';
 import HotelListingPage from './pages/HotelListingPage';
 import HotelDetailPage from './pages/HotelDetailPage';
+import Traincheckoutpage from './pages/Traincheckoutpage';
 
 function App() {
   return (
@@ -20,6 +21,10 @@ function App() {
             <Route path="hotel-listing" element={<HotelListingPage />} />
             <Route path="hotel-listing/:id" element={<HotelDetailPage />} />
         </Route>
+        <Route
+            path="/traincheckoutpage/:id/:coachName"
+            element={<Traincheckoutpage />}
+          />
     </Routes>
 </BrowserRouter>
   );

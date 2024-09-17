@@ -1,6 +1,35 @@
 import React from "react";
 import "../pages/trainsearchpage.css";
+import { Link } from "react-router-dom";
 
+const calculateFare = (baseFare, coachType) => {
+  let multiplier = 1;
+
+  // Assign multipliers based on coach types (capped at 2.5)
+  switch (coachType) {
+    case "1A": // First AC
+      multiplier = 2.2;
+      break;
+    case "2A": // Second AC
+      multiplier = 2;
+      break;
+    case "3A": // Third AC
+      multiplier = 1.7;
+      break;
+    case "CC": // Chair Car
+      multiplier = 1.5;
+      break;
+    case "SL": // Sleeper Class
+      multiplier = 1.2;
+      break;
+    default:
+      multiplier = 1; // General or any other coach type
+      break;
+  }
+
+  // Calculate final fare based on base fare and multiplier
+  return baseFare * multiplier;
+};
 const TrainCard = ({ data }) => {
   return (
     <>
@@ -40,17 +69,19 @@ const TrainCard = ({ data }) => {
                 </div>
               </div>
 
-              <div className="showtrains-btmdiv">
+                  <div className="showtrains-btmdiv">
                     {train?.coaches.map((coach, coachIndex) => (
+              <Link to={`/traincheckoutpage/${train.id}/${coach.coachType}`}>
                       <div key={coachIndex} className="sl-card">
                         <div>
                           <p>{coach.coachType}</p>
-                          <p>₹ {coach.numberOfSeats * 10}</p>
+                          <p>₹ {calculateFare(train.fare, coach.coachType)}</p>
                           {/* You can replace this calculation with your actual logic */}
                         </div>
                         <p className="rac-nmbr">RAC {coachIndex + 1}</p>
                         <p className="cancellation">Free Cancellation</p>
                       </div>
+                    </Link>
                     ))}
                   </div>
             </div>

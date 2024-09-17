@@ -50,12 +50,7 @@ const TrainListingPage = () => {
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/trains/trains/");
         let filteredTrains = response.data;
-        console.log(filteredTrains)
         if (source) {
-          for (var trains of filteredTrains)
-          {
-            console.log(trains)
-          }
           filteredTrains = filteredTrains.filter(train => train.source === source);
 
         }
