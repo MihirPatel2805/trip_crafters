@@ -19,6 +19,7 @@ function HotelDetailPage() {
             try {
                 const hotelResponse = await axios.get(`http://localhost:8000/api/hotels/hoteldetails/${id}`);
                 setHotel(hotelResponse.data);
+                console.log(hotelResponse.data)
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching hotel data:", error);

@@ -221,7 +221,7 @@ function HotelListingPage() {
   useEffect(() => {
     const fetchHotels = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/hotels/fetchHotels/", {
+        const response = await axios.get("http://localhost:8000/api/hotels/featchHotels", {
           params: {
             city,
             amenities,

@@ -6,7 +6,7 @@ class Hotel(models.Model):
     location = models.CharField(max_length=255)
     description = models.TextField()
     rating = models.FloatField()
-    price_per_night = models.DecimalField(max_digits=10, decimal_places=2)
+    price_per_night = models.FloatField()
     amenities = models.JSONField()  # List of amenities
     available_rooms = models.IntegerField()
 
@@ -23,7 +23,7 @@ class HotelImage(models.Model):
 class Room(models.Model):
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE ,related_name='rooms')
     room_type = models.CharField(max_length=100)
-    price_per_night = models.DecimalField(max_digits=10, decimal_places=2)
+    price_per_night = models.FloatField()
     max_guests = models.IntegerField()
     number_of_rooms = models.IntegerField()
     description = models.TextField()
