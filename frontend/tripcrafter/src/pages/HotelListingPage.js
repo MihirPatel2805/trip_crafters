@@ -378,13 +378,13 @@ function HotelListingPage() {
           {/* Right Side - Hotel Listings */}
           <div className="col-span-3 grid grid-cols-2 md:grid-cols-2 gap-4">
             {hotels.map((hotel) => (
-              <div key={hotel.id} className="bg-white rounded-lg p-4 shadow-md" onClick={() => handleHotelClick(hotel.id)}>
+              <div className="bg-white rounded-lg p-4 shadow-md" >
                 <img src={`http://localhost:8000${hotel.images[0].image}`} alt={hotel.name} className="w-full h-64 object-cover rounded-md mb-2" />
                 <h2 className="font-bold text-xl">{hotel.name}</h2>
                 <p className="text-gray-600">Price: ₹{hotel.price_per_night}</p>
                 <p className="text-gray-600">Rating: {hotel.rating}</p>
                 <p className="text-gray-600">Amenities: {hotel.amenities.join(", ")}</p>
-                <button className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-2 hover:bg-blue-600">
+                <button key={hotel.id} className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-2 hover:bg-blue-600" onClick={() => handleHotelClick(hotel.id)}>
                   View Details
                 </button>
               </div>
