@@ -49,26 +49,6 @@ class HotelListAPIView(APIView):
 
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
-# class HotelListAPIView(APIView):
-#     def get(self, request):
-#         city = request.query_params.get('city')
-#         amenities = request.query_params.get('amenities')
-#         rating = request.query_params.get('rating')
-#         price = request.query_params.get('price')
-#         searchTerm = request.query_params.get('searchTerm')
-#         try:
-#             if city:
-#                 hotels = Hotel.objects.filter(location__icontains=city).all()
-#                 serializer = HotelSerializer(hotels, many=True)
-#                 return Response(serializer.data, status=status.HTTP_200_OK)
-#             else:
-#                 hotels = Hotel.objects.all()
-#                 serializer = HotelSerializer(hotels, many=True)
-#                 print(serializer.data)
-#                 return Response(serializer.data, status=status.HTTP_200_OK)
-#         except Exception as e:
-#             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
-
 
 class HotelDetailAPIView(APIView):
     def get_object(self, pk):
@@ -81,9 +61,8 @@ class HotelDetailAPIView(APIView):
         serializer = HotelSerializer(hotel)
         return Response(serializer.data , status=status.HTTP_200_OK)
 
-# class RoomDetailAPIView(APIView):
+
+# class BookingListAPIView(APIView):
 #     def get(self, request):
-#         room = Room.objects.all()
-#         print(room)
-#         serializer = RoomSerializer(room)
-#         return Response(serializer.data, status=status.HTTP_200_OK)
+#         hotels = Hotel.objects.filter(filters).all()
+#         serializer = HotelSerializer(hotels, many=True)
